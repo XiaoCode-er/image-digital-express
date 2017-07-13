@@ -6,6 +6,8 @@ import numpy as np
 class ImageDigitalExpress(object):
     def __init__(self, image_path):
         self._image_path = image_path
+        
+#   calculate an image mean and variance , return a tuple 
 
     def image_mean_variance(self):
         summary = 0
@@ -25,23 +27,32 @@ class ImageDigitalExpress(object):
 
         variance = math.sqrt(diff_sum / (row * column))
         return mean, variance
+    
+# calculate an image information entropy 
 
     def image_infoentropy(self):
         img = io.imread(self._image_path, as_grey=True)
         img_size = img.size
-        hist = np.histogram(img, bins=256)[0]/img_size
+        hist = np.histogram(img, bins=256)[0] / img_size
         hist_list = list(hist)
+        num = 0
+
         for i in range(len(hist_list)):
             if hist_list[i] == 0:
-                del hist_list[i]
+                num += 1
+
+        for n in range(num):
+            hist_list.remove(0)
 
         sum_num = len(hist_list)
         add_sum = 0
+
         for k in range(sum_num):
-            add_sum += hist_list[k]*math.log(hist_list[k], 2)
+            add_sum += hist_list[k] * math.log(hist_list[k], 2)
 
         img_entropy = -add_sum
         return img_entropy
+
 
 
 
