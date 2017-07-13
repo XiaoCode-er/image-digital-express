@@ -2,14 +2,14 @@ from skimage import io
 import math
 import os
 import matplotlib.pyplot as plt
-# 生成聚类的图像
 
-
+# generate the 2D scatter
 def cluster(path):
     name_list = os.listdir(path)
     mean_list = []
     variance_list = []
-# 生成所需要的x，y的数据
+    
+# produce the x,y data
     for i in range(len(name_list)):
 
         img_path = os.path.join(path, name_list[i])
@@ -18,13 +18,13 @@ def cluster(path):
         column = len(img[0])
         summary = 0
         diff_sum = 0
-        # 均值的计算
+        
         for c in range(row):
             for n in range(column):
                 summary += img[c][n]
         mean = summary / (row * column)
         mean_list.append(mean)
-        # 方差的计算
+        
         for a in range(row):
             for b in range(column):
                 diff_sum += (img[a][b] - mean) ** 2
@@ -35,10 +35,9 @@ def cluster(path):
 des1 = 'D:/fonts/class/0/'
 des2 = 'D:/fonts/class/1/'
 des3 = 'D:/fonts/class/2/'
-
+ 
+#  plot the x,y scatter
 cluster1 = cluster(des1)
-# print(len(cluster1))
-# 绘制散点图
 plt.scatter(cluster1[0], cluster1[1], c='r')
 cluster2 = cluster(des2)
 plt.scatter(cluster2[0], cluster2[1], c='b')
